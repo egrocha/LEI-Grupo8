@@ -38,9 +38,9 @@ block content
 				input.w3-input.w3-border.w3-light-grey(type='password', name='password', id='login_password')
 				br
 				input.w3-btn.w3-grey(type='submit', value='Enviar', id='login_button')
-	.w3-container
+	
 		hr
-		.g-signin2(data-onsuccess='onSignIn' data-failure='onFailure' data-theme='dark')
+		.g-signin2(data-onsuccess='onSignIn' data-failure='onFailure' data-theme='dark' data-longtitle="false")
 		script(src="javascripts/googlescript.js")
 		//a(href='' onclick='signOut();') Sign out
 		script.
@@ -50,10 +50,11 @@ block content
 					console.log('User signed out.');
 				});
 			}
-	.w3-container
+		br
+
 		script(src='javascripts/facebookscript.js')
 		//.fb:login-button(scope='public_profile, email' onlogin='checkLoginState();' data-size='large' data-button-type='login_with' data-auto-logout-link='true' data-use-continue-as='false')
-		fb:login-button(scope='public_profile' onlogin='loginFacebook')
+		fb:login-button(scope='public_profile' onlogin='loginFacebook' data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true")
 		br
 		//a(href='' onclick='logOut();') Log out
 
@@ -80,12 +81,18 @@ block content
 					console.log('Logged in as: ' + response.name)
 				})
 			}
+		br
 
-	.w3-container
-		a(href='https://localhost:3000/auth/loginGithub') LOGIN GITHUB
-
-	.w3-container
-		a(href='https://localhost:3000/auth/loginTwitter') LOGIN TWITTER
-
+		//Github
+		a(href='https://localhost:3000/auth/loginGithub') 
+			img(src="./images/github.svg" width="50px")
+		
+		br
+		br
+		//Twitter
+		a(href='https://localhost:3000/auth/loginTwitter')
+			img(src="./images/twitter.svg", width="50px")
+		br
+		br
 		footer.w3-container.w3-blue-grey
 			a(href="/") Voltar à página principal

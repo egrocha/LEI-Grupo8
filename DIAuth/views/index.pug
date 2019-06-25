@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-blue-grey
+				h3 LEI
+			.w3-container
+				ul
+					li
+						a(href='/signup') Registo
+					li
+						a(href='/login') Login
+					li
+						a(href='/user') User
+					li
+						a(href='/logout') Logout
+				hr
+				ul
+					li
+						a(href='/guide') Guia de Utilização
+				hr
+				ul
+					li
+						a(href='/user/apps') Ver aplicações registadas
+					li
+						a(href='/user/registerapp') Registar nova aplicação
+				hr
+				ul
+					li
+						a(href='/oauth/dialog/authorize?redirect_uri=https://localhost:3000/oauth/exchange&response_type=code&client_id=abc123&scope=*') Teste OAuth2

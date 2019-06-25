@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-red
+				h3 Teste de Uso de OAuth2
+			.w3-container
+				br
+				a(href='https://localhost:3000/oauth/dialog/authorize?redirect_uri=http://localhost:4000/callback&response_type=code&client_id=abc123&scope=offline_access') Teste OAuth2
+				br
+				br

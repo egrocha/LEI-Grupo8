@@ -1,0 +1,52 @@
+extends layout
+
+block content
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-blue-grey
+				h3 Troca de Códigos
+			.w3-container
+				if code
+					p O seu código de autorização é:
+					p= code
+					script.
+						function getParameterByName(name){
+							var match = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search)
+							return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
+						}
+						function exchange(){
+							var http = location.protocol
+							var slashes = http.concat('//')
+							var port = location.port ? ':' + location.port : ''
+							var host = slashes.concat(window.location.hostname) + port
+							var code = getParameterByName('code')
+							$.ajax({
+								type: 'POST',
+								dataType: 'json',
+								url: '/oauth/token',
+								data: 'code=' + code + '&redirect_uri=' + host+'/oauth/exchange' + '&client_id=abc123&client_secret=ssh-secret&grant_type=authorization_code',
+								success: function(result){
+									var access_token = result.access_token
+									window.location.href = '/oauth/teste?token=' + access_token
+								}							
+							})
+
+
+							$.ajax({
+								type: 'POST',
+								dataType: 'json',
+								url: '/oauth/token',
+								data: 'code='+code+'&redirect_uri='+redirectURI+
+									'&client_id='+clientID+'&client_secret='+clientSecret+
+									'&grant_type=authorization_code',
+								success: function(result){
+									var access_token = result.access_token
+									console.log(access_token)
+								}							
+							})
+						}
+					button(onclick='exchange()') Exchange
+					br
+					br
+		footer.w3-container.w3-blue-grey
+			a(href="/") Voltar à página principal

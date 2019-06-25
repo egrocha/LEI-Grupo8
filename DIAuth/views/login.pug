@@ -1,0 +1,91 @@
+extends layout
+
+block content
+	#fb-root
+	script(async='' defer='' src='https://connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v3.2&appId=2148390798714928&autoLogAppEvents=1')
+
+	script.
+		window.fbAsyncInit = function() {
+		FB.init({
+		appId      : '2288489154550105',
+		cookie     : true,
+		xfbml      : true,
+		version    : 'v3.2'
+		});
+		FB.AppEvents.logPageView();
+		};
+		(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "https://connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-blue-grey
+				h3 Login
+		.w3-container
+			form.w3-container(action='/login', method='POST', id='login_form')
+				p
+				label.w3-text-black
+					b Username
+				input.w3-input.w3-border.w3-light-grey(type='text', name='username', id='login_username')
+				br
+				label.w3-text-black
+					b Password
+				input.w3-input.w3-border.w3-light-grey(type='password', name='password', id='login_password')
+				br
+				input.w3-btn.w3-grey(type='submit', value='Enviar', id='login_button')
+	.w3-container
+		hr
+		.g-signin2(data-onsuccess='onSignIn' data-failure='onFailure' data-theme='dark')
+		script(src="javascripts/googlescript.js")
+		//a(href='' onclick='signOut();') Sign out
+		script.
+			function signOut() {
+				var auth2 = gapi.auth2.getAuthInstance();
+				auth2.signOut().then(function () {
+					console.log('User signed out.');
+				});
+			}
+	.w3-container
+		script(src='javascripts/facebookscript.js')
+		//.fb:login-button(scope='public_profile, email' onlogin='checkLoginState();' data-size='large' data-button-type='login_with' data-auto-logout-link='true' data-use-continue-as='false')
+		fb:login-button(scope='public_profile' onlogin='loginFacebook')
+		br
+		//a(href='' onclick='logOut();') Log out
+
+		script.
+			function checkLoginState() {
+				FB.getLoginStatus(function(response) {
+					console.log(response);
+					if(response.status === 'connected'){
+						//testAPI();
+						FB.api('/me', {fields: 'name'}, function(response){
+							
+						})
+					}
+				});
+			}
+			function logOut() {
+				FB.logout(function(response){
+					console.log(response)
+				})
+			}
+			function testAPI(){
+				FB.api('/me', {fields: 'name'}, function(response){
+					console.log(response)
+					console.log('Logged in as: ' + response.name)
+				})
+			}
+
+	.w3-container
+		a(href='https://localhost:3000/auth/loginGithub') LOGIN GITHUB
+
+	.w3-container
+		a(href='https://localhost:3000/auth/loginTwitter') LOGIN TWITTER
+
+		footer.w3-container.w3-blue-grey
+			a(href="/") Voltar à página principal

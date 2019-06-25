@@ -1,0 +1,119 @@
+extends layout
+
+block content
+	#fb-root
+	script(async='' defer='' src='https://connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v3.2&appId=2148390798714928&autoLogAppEvents=1')
+
+	script.
+		window.fbAsyncInit = function() {
+		FB.init({
+		appId      : '2288489154550105',
+		cookie     : true,
+		xfbml      : true,
+		version    : 'v3.2'
+		});
+		FB.AppEvents.logPageView();
+		};
+		(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "https://connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-blue-grey
+				h3 Perfil de Utilizador
+
+			.w3-container
+				h4 Informações pessoais
+				table.w3-table-all
+					tr
+						th Email
+						td= user.username
+					tr
+						if user.name
+							th Nome
+							td= user.name
+					tr
+						if user.number
+							th Número
+							td= user.number
+					tr
+						if user.idGoogle
+							th ID Google
+							td= user.idGoogle
+					tr
+						if user.idFacebook
+							th ID Facebook
+							td= user.idFacebook
+					tr
+						if user.idGithub
+							th ID Github
+							td= user.idGithub
+					tr
+						if user.idTwitter
+							th ID Twitter
+							td= user.idTwitter
+			hr
+			.w3-container
+				h4 Associar contas
+
+			.w3-container
+				//Google
+				.g-signin2(data-onsuccess='addGoogle' data-failure='onFailure' data-theme='dark' data-longtitle="false")
+				script(src="javascripts/googlescript.js")
+				script.
+					function signOut() {
+						var auth2 = gapi.auth2.getAuthInstance();
+						auth2.signOut().then(function () {
+							console.log('User signed out.');
+						});
+					}
+
+				br
+
+				//Facebook
+				script(src='javascripts/facebookscript.js')
+				fb:login-button(scope='public_profile' onlogin='addFacebook' data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true")
+				br
+				script.
+					function checkLoginState() {
+						FB.getLoginStatus(function(response) {
+							console.log(response);
+							if(response.status === 'connected'){
+								testAPI();
+							}
+						});
+					}
+					function logOut() {
+						FB.logout(function(response){
+							console.log(response)
+						})
+					}
+					function testAPI(){
+						FB.api('/me', {fields: 'name'}, function(response){
+							console.log(response)
+							console.log('Logged in as: ' + response.name)
+						})
+					}
+
+				br
+
+				//Github
+				a(href='https://localhost:3000/auth/loginGithub') 
+					img(src="./images/github.svg" width="50px")
+				
+				br
+				br
+				//Twitter
+				a(href='https://localhost:3000/auth/loginTwitter')
+					img(src="./images/twitter.svg", width="50px")
+
+				br
+				br
+
+			footer.w3-container.w3-blue-grey
+				a(href='https://localhost:3000') Voltar à página inicial

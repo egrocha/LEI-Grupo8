@@ -1,0 +1,6 @@
+TUTORIAL:
+1 - download docker e docker-compose (sudo apt-get install docker && sudo apt-get install docker-compose)
+2 - (opcional, acho que não é preciso) criar conta com docker e fazer login no terminal (sudo docker login)
+3 - ir para diretoria do servidor (Teste)
+4 - sudo docker-compose up
+5 - aceder site em https://localhost:3000

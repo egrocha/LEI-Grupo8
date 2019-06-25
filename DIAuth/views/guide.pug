@@ -1,0 +1,49 @@
+extends layout
+
+block content
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-blue-grey
+				h3 Guia de Utilização
+			.w3-container
+				p Antes de inicar o processo para registo de Cliente é necessário ter uma conta registada neste servidor.
+				p Caso não tenha conta, faça registo aqui:
+				a(href="/signup") Registo
+				hr
+				p Se tiver conta, aceda à página de criação de Clientes e registe um novo:
+				a(href="/user/registerapp") Registo de Clientes
+				p Pode ver os Clientes que registou nesta página:
+				a(href="/user/apps") Clientes Registados
+				hr
+				p Com um Cliente criado, copie os dados fornecidos para um ficheiro onde possa aceder esses dados de forma conveniente a partir da sua aplicação.
+				p Por exemplo:
+				img(src="./images/file_example.png", alt="File Example")
+				hr
+				p De seguida, implemente um tipo de link que reencaminhe o seu utilizador para a nossa página de diálogo de autorização (/oauth/dialog/authorize).
+				p Para completar o processo de autorização é necessário que o Cliente forneca os seguintes parâmetros:
+				ol
+					li redirect_uri: o link a que iremos redirecionar o utilizador no fim do processo
+					li response_type: o tipo de código que espera (default: "code")
+					li client_id: o ID do seu Cliente registado
+					li scope: a gama de informações a que pretende ter acesso (default: "*")
+				p Portanto, a rota de um link para o nosso site deverá estar formatada assim:
+				p /oauth/dialog/authorize?redirect_uri=[SEU-WEBSITE.COM/REDIRECT]&response_type=code&client_id=[SEU_CLIENT_ID]&scope=*
+				hr
+				p Se o utilizador der autorização ao uso da sua conta, irá ser redirecionado para o endereço de redirecionamento fornecido com um parâmetro chamado "code" que terá o valor do código de autorização gerado. Este código deve ser trocado por um token no endpoint de troca. Para fazer esta troca, envie um pedido em método POST para a rota /oauth/token e espere por uma resposta. 
+				p Junto com o pedido de troca deverão ir os seguintes parâmetros:
+				ol
+					li code: o código recebido após a autorização
+					li redirect_uri: o endereço de redirect após a troca
+					li client_id: o seu ID de Cliente
+					li client_secret: o seu segredo de Cliente
+					li grant_type: o tipo de autorização realizado (default: "authorization_code")
+				p Eis um exemplo de troca usando axios:
+				img(src="./images/exchange_example.png", alt="Exchange Example")
+				hr
+				p Caso a troca corra bem, irá receber um token como resposta. Este token deve ser enviado juntamente a pedidos de acesso à nossa API para poder aceder aos dados do utilizador.
+				p Eis um exemplo de acesso usando axios:
+				img(src="./images/axios_example.png", alt="Axios Example")
+				br
+				br
+		footer.w3-container.w3-blue-grey
+			a(href="/") Voltar à página principal

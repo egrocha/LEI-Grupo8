@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-red
+				h3 Teste de Uso de OAuth2
+			.w3-container
+				p Foi obtido um código de acesso através do seguinte URL: https://localhost:3000/oauth/exchange
+				p O código de acesso recebido é:
+				p !{code}
+				p Este código foi trocado por um token de acesso no seguinte URL: https://localhost:3000/oauth/token
+				p O token de acesso recebido é:
+				p !{token}	
+				br
+				br

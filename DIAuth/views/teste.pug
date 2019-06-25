@@ -1,0 +1,42 @@
+extends layout
+
+block content
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-blue-grey
+				h3 Teste de Uso de Token
+			.w3-container
+				if token
+					p O seu token de acesso é:
+					p= token
+					script.
+						function getParameterByName(name){
+							var match = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search)
+							return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
+						}
+						function exchange(){
+							var http = location.protocol
+							var slashes = http.concat('//')
+							var port = location.port ? ':' + location.port : ''
+							var host = slashes.concat(window.location.hostname) + port
+							var access_token = getParameterByName('token')
+							$.ajax({
+								type: 'GET',
+								dataType: 'json',
+								url: '/api/user',
+								headers:{
+									'Authorization': 'Bearer ' + access_token
+								},
+								success: function(result){
+									console.log(result)
+								}
+							})
+						}
+
+					p Abra a consola com o butão F12 e carregue no botão abaixo para testar o acesso à API:
+
+					button(onclick='exchange()') Testar Accesso a API
+					br
+					br
+		footer.w3-container.w3-blue-grey
+			a(href="/") Voltar à página principal
